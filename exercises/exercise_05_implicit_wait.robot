@@ -6,6 +6,7 @@ Library          SeleniumLibrary
 # - Opens Chrome
 # - Navigates to http://parabank.parasoft.com
 # - Sets the implicit wait timeout to 10 seconds
+Test Setup       Open And Maximize With Implicit Wait  ${HOMEPAGE}  ${BROWSER}  10s
 Test Teardown    Close Browser
 
 *** Variables ***
@@ -31,3 +32,9 @@ Log In As And Get Number Of Menu Options
     Click Button  xpath://input[@value='Log In']
     ${number_of_options}=  Get Element Count  xpath://div[@id='leftPanel']//a
     [Return]  ${number_of_options}
+
+Open And Maximize With Implicit Wait
+    [Arguments]     ${HOMEPAGE}   ${BROWSER}    ${TIMEOUT}
+    Open Browser  ${HOMEPAGE}  ${BROWSER}
+    Set Browser Implicit Wait  ${TIMEOUT}
+    Maximize Browser Window

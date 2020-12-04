@@ -18,8 +18,8 @@ Log in to ParaBank as John and check number of menu options
     ### Exercise 4
     # Replace the right keywords in this script with your custom keyword from Exercise 3
     # Run your test and see what happens
-    ${number_of_links}=  Login to Para bank and return number of links
-    Should Be Equal As Integers  ${number_of_links  8
+    ${number_of_links}=  Login to Para bank and return number of links  john    demo
+    Should Be Equal As Integers  ${number_of_links}  8
 
 
 ### Exercise 1
@@ -42,7 +42,8 @@ Open and Maximize Browser
 # //div[@id='leftPanel']//a
 
 Login to Para bank and return number of links
-    Input Text  name:username  john
-    Input Text  name:password  demo
+    [Arguments]     ${username}    ${password}
+    Input Text  name:username  ${username}
+    Input Text  name:password  ${password}
     Click Button  xpath://input[@value='Log In']
     [Return]  Get Element Count  xpath://div[@id='leftPanel']//a

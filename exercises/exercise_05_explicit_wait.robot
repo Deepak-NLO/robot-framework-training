@@ -9,6 +9,7 @@ ${HOMEPAGE}  http://parabank.parasoft.com
 ${BROWSER}   Chrome
 ${TIMEOUT}   10
 
+
 *** Test Cases ***
 Log in to ParaBank as John and check number of menu options
     ${number_of_menu_options}=  Log In As And Get Number Of Menu Options  john  demo
@@ -22,20 +23,23 @@ Open And Maximize
 
 Log In As And Get Number Of Menu Options
     [Arguments]  ${username}  ${password}
+
     ### Exercise 1
     # Add an explicit wait that waits for the username field
     # to become enabled for max. 10 seconds before proceeding
-    Input Text  name:username  ${username}
+    Wait and Input Text     name:username     ${username}
     ### Exercise 2
     # The same as Exercise 1, but now for the password field
-    Input Text  name:password  ${password}
+
+    Wait and Input Text     name:password      ${password}
     ### Exercise 3
     # The same as Exercise 2, but now for the login button
-    Click Button  xpath://input[@value='Log In']
+
+    Wait and Click      xpath://input[@value='Log In']
     ### Exercise 4
     # Add an explicit wait that waits for a menu item
     # to become visible for max. 10 seconds before proceeding
-    ${number_of_options}=  Get Element Count  xpath://div[@id='leftPanel']//a
+    ${number_of_options}=  Wait and Get Element Count  xpath://div[@id='leftPanel']//a
     [Return]  ${number_of_options}
 
 ### Exercise 5
@@ -48,6 +52,16 @@ Log In As And Get Number Of Menu Options
 # Replace the keywords in 'Log In As And Get Number Of Menu Options' with this custom keyword
 # Run the test and see what happens..
 
+Wait and Input Text
+    [Arguments]  ${element}     ${inputText}
+    Wait Until Element Is Enabled   ${element}   ${TIMEOUT}
+    Input Text                      ${element}   ${inputText}
+
+Wait and Click
+    [Arguments]  ${element}
+    Wait Until Element Is Enabled   ${element}   ${TIMEOUT}
+    Click Element                   ${element}
+
 
 ### Exercise 6
 # Do the same as in Exercise 5, but now for clicking (first wait until the element is enabled, then click)
@@ -56,3 +70,9 @@ Log In As And Get Number Of Menu Options
 ## Exercise 7
 # Do the same as in Exercise 5, but now for getting the number of elements
 # (first wait until an occurrence of the element is visible, then return the number of elements found)
+
+Wait and Get Element Count
+    [Arguments]     ${element}
+    Wait Until Element Is Visible     ${element}
+    ${number_of_options}=  Get Element Count  ${element}
+    [Return]  ${number_of_options}
