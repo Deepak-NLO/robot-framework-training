@@ -3,6 +3,7 @@ Documentation    Exercise 06 - Using resources
 Library          SeleniumLibrary
 Test Setup       Open And Maximize  ${HOMEPAGE}  ${BROWSER}
 Test Teardown    Close Browser
+Resource         common_keywords.robot
 ### Exercise 2
 # Use the keywords file from Exercise 1 as a resource
 # Run the test to see if it works
@@ -30,23 +31,4 @@ Log In As And Get Number Of Menu Options
 ### Exercise 1
 # Move all keywords below to a separate 'common_keywords.robot' file
 # Create this file in the 'exercises' folder (where this exercise is located)
-Open And Maximize
-    [Arguments]  ${url}  ${browser_name}
-    Open Browser  ${url}  ${browser_name}
-    Maximize Browser Window
 
-Wait And Type
-    [Arguments]  ${locator}  ${text_to_type}
-    Wait Until Element Is Enabled  ${locator}  ${TIMEOUT}
-    Input Text  ${locator}  ${text_to_type}
-
-Wait And Click
-    [Arguments]  ${locator}
-    Wait Until Element Is Enabled  ${locator}  ${TIMEOUT}
-    Click Button  ${locator}
-
-Wait And Get Element Count
-    [Arguments]  ${locator}
-    Wait Until Element Is Visible  ${locator}  ${TIMEOUT}
-    ${number_of_elements}=  Get Element Count  ${locator}
-    [Return]  ${number_of_elements}
