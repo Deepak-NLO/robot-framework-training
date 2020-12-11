@@ -13,18 +13,22 @@ Log In And Check Page Title
     ### Exercise 1
     # Using a FOR loop, go through the Log In - Check Title - Log Out
     # sequence twice, once for user 'john' and once for user 'parasoft'
-    Log In As  john  demo
-    Title Should Be  ParaBank | Accounts Overview
-    Wait And Click  xpath://a[text()='Log Out']
+    FOR  ${user}   IN   john  parasoft
+        Log In As  ${user}  demo
+        Title Should Be  ParaBank | Accounts Overview
+        Wait And Click  xpath://a[text()='Log Out']
+    END
 
 List Account Numbers
     ### Exercise 2
     # Using a FOR loop, log all 11 account numbers for user 'john'
     # The sequence below logs the first one
     Log In As  john  demo
-    Wait Until Element Is Visible  xpath:(//table[@id='accountTable']//a)[1]
-    ${account_number}=  Get Text  xpath:(//table[@id='accountTable']//a)[1]
-    Log  Account 1 for user 'john' has account number ${account_number}
+    FOR     ${account}      IN RANGE    1   12
+        Wait Until Element Is Visible  xpath:(//table[@id='accountTable']//a)[${account}]
+        ${account_number}=  Get Text  xpath:(//table[@id='accountTable']//a)[${account}]
+        Log  Account ${account} for user 'john' has account number ${account_number}
+    END
 
 *** Keywords ***
 Log In As
