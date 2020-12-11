@@ -21,6 +21,20 @@ ${BROWSER}   Chrome
 ### Exercise 2
 # Add another test case that does the same as Exercise 1, but now for user 'parasoft' with password 'demo'
 
+Verify the number of accounts for John
+    Log In As   john    demo
+    ${noOfAccounts}=    Get Number Of Accounts
+    Run Keyword If      ${noOfAccounts} > 1     Log     John has multiple accounts
+    ...     ELSEIF      ${noOfAccounts} = 1     Log     John has only a single account
+    ...     ELSE        Log  John has no accounts
+
+Verify the number of accounts for Parasoft
+    Log In As   parasoft    demo
+    ${noOfAccounts}=    Get Number Of Accounts
+    Run Keyword If      ${noOfAccounts} > 1     Log     Parasoft has multiple accounts
+    ...     ELSEIF      ${noOfAccounts} = 1     Log     Parasoft has only a single account
+    ...     ELSE        Log  Parasoft has no accounts
+
 *** Keywords ***
 Log In As
     [Arguments]  ${username}  ${password}
