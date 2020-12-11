@@ -2,6 +2,7 @@
 Documentation    Exercise 08 - Test templates
 Library          SeleniumLibrary
 Test Setup       Open And Maximize  ${HOMEPAGE}  ${BROWSER}
+#Test Template    Log in to ParaBank and check if user has multiple accounts
 Test Teardown    Close Browser
 Resource         ../answers/common_keywords.robot
 
@@ -30,6 +31,16 @@ Log in to ParaBank as Bob and check if user has multiple accounts
     ...  ELSE  Log  User 'bob' has only a single account
     Wait And Click  xpath://a[text()='Log Out']
 
+Check if user has multiple accounts
+    john  demo
+    parasoft  demo
+
+Check how many accounts does John has
+    Login as "john" and check users account.
+
+Check how many accounts does Parasoft has
+    Login as "parasoft" and check users account.
+
 *** Keywords ***
 Log In As
     [Arguments]  ${username}  ${password}
@@ -40,3 +51,19 @@ Log In As
 Get Number Of Accounts
     ${number_of_accounts}=  Wait And Get Element Count  xpath://table[@id='accountTable']//a
     [Return]  ${number_of_accounts}
+
+
+Log in to ParaBank and check if user has multiple accounts
+     [Arguments]  ${username}  ${password}
+     Log In As  ${username}  ${password}
+     ${number_of_accounts}=  Get Number Of Accounts
+     Run Keyword If  ${number_of_accounts} > 1  Log  User ${username} has multiple accounts
+     ...  ELSE  Log  User ${username} has only a single account
+     Wait And Click  xpath://a[text()='Log Out']
+
+Login as "${username}" and check users account.
+     Log In As  ${username}  demo
+     ${number_of_accounts}=  Get Number Of Accounts
+     Run Keyword If  ${number_of_accounts} > 1  Log  User ${username} has multiple accounts
+     ...  ELSE  Log  User ${username} has only a single account
+     Wait And Click  xpath://a[text()='Log Out']
