@@ -2,7 +2,7 @@
 Documentation    Exercise 08 - Test templates
 Library          SeleniumLibrary
 Test Setup       Open And Maximize  ${HOMEPAGE}  ${BROWSER}
-#Test Template    Log in to ParaBank and check if user has multiple accounts
+Test Template    Log in to ParaBank and check if user has multiple accounts
 Test Teardown    Close Browser
 Resource         ../answers/common_keywords.robot
 
@@ -17,29 +17,11 @@ ${BROWSER}   Chrome
 # 2. Defining this keyword as a Test Template
 #    (can you find out how to use the username in the log statement, too?)
 # 3. Specifying the iterations (test cases) in the *** Test Cases *** section
-Log in to ParaBank as John and check if user has multiple accounts
-    Log In As  john  demo
-    ${accounts}=  Get Number Of Accounts
-    Run Keyword If  ${accounts} > 1  Log  User 'john' has multiple accounts
-    ...  ELSE  Log  User 'john' has only a single account
-    Wait And Click  xpath://a[text()='Log Out']
 
-Log in to ParaBank as Bob and check if user has multiple accounts
-    Log In As  parasoft  demo
-    ${accounts}=  Get Number Of Accounts
-    Run Keyword If  ${accounts} > 1  Log  User 'bob' has multiple accounts
-    ...  ELSE  Log  User 'bob' has only a single account
-    Wait And Click  xpath://a[text()='Log Out']
 
-Check if user has multiple accounts
-    john  demo
-    parasoft  demo
+Check how many accounts does John has   john  demo
 
-Check how many accounts does John has
-    Login as "john" and check users account.
-
-Check how many accounts does Parasoft has
-    Login as "parasoft" and check users account.
+Check how many accounts does Parasoft has  parasoft  demo
 
 *** Keywords ***
 Log In As
@@ -56,13 +38,6 @@ Get Number Of Accounts
 Log in to ParaBank and check if user has multiple accounts
      [Arguments]  ${username}  ${password}
      Log In As  ${username}  ${password}
-     ${number_of_accounts}=  Get Number Of Accounts
-     Run Keyword If  ${number_of_accounts} > 1  Log  User ${username} has multiple accounts
-     ...  ELSE  Log  User ${username} has only a single account
-     Wait And Click  xpath://a[text()='Log Out']
-
-Login as "${username}" and check users account.
-     Log In As  ${username}  demo
      ${number_of_accounts}=  Get Number Of Accounts
      Run Keyword If  ${number_of_accounts} > 1  Log  User ${username} has multiple accounts
      ...  ELSE  Log  User ${username} has only a single account
